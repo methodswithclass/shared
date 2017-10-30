@@ -1,7 +1,7 @@
 
+var obj = {};
 
-
-(function(window) {
+(function(obj) {
 
 
 	var events = {};
@@ -311,7 +311,7 @@
 	} 
 
 	
-	window.events_service = {
+	obj.events_service = {
 		on:on,
 		dispatch:dispatch,
 		defer:defer,
@@ -323,7 +323,7 @@
 	}
 
 
-})(window)
+})(obj)
 
 
 
@@ -331,7 +331,7 @@
 
 
 
-(function (window) {
+(function (obj) {
 
 	
 	var saves = {};
@@ -424,7 +424,7 @@
 		}
 	}
 
-	window.react_service = {
+	obj.react_service = {
 		observable:observable,
 		subscribe:subscribe,
 		push:push
@@ -432,7 +432,7 @@
 
 
 
-})(window)
+})(obj)
 
 
 
@@ -440,7 +440,7 @@
 
 
 
-(function (window) {
+(function (obj) {
 
 
 	var saved = {};
@@ -567,7 +567,7 @@
 
 	
 
-	window.send_service = {
+	obj.send_service = {
 		back:new back(),
 		save:new save()
 	}
@@ -575,7 +575,7 @@
 
 
 
-})(window)
+})(obj)
 
 
 
@@ -604,7 +604,7 @@
 
 
 
-(function (window) {
+(function (obj) {
 
 	// var mcshared = {};
 
@@ -854,7 +854,7 @@
 
 	}
 
-	window.utility_service = {
+	obj.utility_service = {
 		forceMobile:forceMobile,
 		isMobile:isMobile,
 		checkMobile:checkMobile,
@@ -876,7 +876,16 @@
 	}
 
 
-})(window);
+})(obj);
+
+
+
+
+window.shared = obj;
+
+
+module.exports = obj;
+
 
 
 

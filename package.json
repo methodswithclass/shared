@@ -1,0 +1,19 @@
+{
+  "name": "mc-shared",
+  "version": "4.0.0",
+  "description": "a set of shared modules for general use in a web application",
+  "main": "shared-module.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/methodswithclass/mc-shared.git"
+  },
+  "author": "Christopher Polito <chris@mwithc.io>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/methodswithclass/mc-shared/issues"
+  },
+  "homepage": "https://github.com/methodswithclass/mc-shared#readme"
+}
