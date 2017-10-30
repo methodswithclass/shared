@@ -880,12 +880,20 @@ var obj = {};
 
 
 
+try {
+	window.shared = obj;
+}
+catch (e) {
+	console.log(e.message);
+}
 
-window.shared = obj;
 
-
-module.exports = obj;
-
+try {
+	module.exports = obj;
+}
+catch (e) {
+	console.log(e.message);
+}
 
 
 
