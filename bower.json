@@ -1,0 +1,17 @@
+{
+  "name": "mc-shared",
+  "description": "a set of shared modules for general use in a web application",
+  "main": "shared.js",
+  "authors": [
+    "Christopher Polito <chris@mwithc.io>"
+  ],
+  "license": "MIT",
+  "homepage": "https://www.methodswithclass.com",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
