@@ -2,7 +2,7 @@
   "name": "mc-shared",
   "version": "4.0.0",
   "description": "a set of shared modules for general use in a web application",
-  "main": "shared-module.js",
+  "main": "shared.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
