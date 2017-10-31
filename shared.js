@@ -323,7 +323,7 @@ var obj = {};
 	}
 
 
-}(obj))
+}(obj));
 
 
 
@@ -432,7 +432,7 @@ var obj = {};
 
 
 
-}(obj))
+}(obj));
 
 
 
@@ -575,7 +575,7 @@ var obj = {};
 
 
 
-}(obj))
+}(obj));
 
 
 
@@ -876,7 +876,8 @@ var obj = {};
 	}
 
 
-}(obj))
+}(obj));
+
 
 console.log("obj module contains", obj);
 
