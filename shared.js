@@ -879,7 +879,6 @@ var obj = {};
 }(obj));
 
 
-console.log("obj module contains", obj);
 
 try {
 	window.shared = obj;
