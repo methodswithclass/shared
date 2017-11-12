@@ -9,6 +9,8 @@ var obj = {};
 	var defers = {};
 	var promises = {};
 
+	var numEvents = 0;
+
 	// runs a saved promise
 	var future = function (name) {
 
@@ -38,26 +40,57 @@ var obj = {};
 		return promises[name];
 	}
 
-	// runs a saved simple callback
+
+
 	var dispatch = function (name) {
 
-		var result;
+		var result = {};
 
-		try {
+		var runEvent = function (index) {
 
-			return events[name]();
+			try {
+
+				var id = self.events[name].find(function (p) {
+
+					return p.id.index == index;
+				})
+				
+				if (index < self.events[name].length) {
+					result[id] = self.events[name][id].event();
+
+					runEvent(index + 1);
+				}
+				else {
+					return result;
+				}
+
+			}
+			catch (e) {
+				console.log("failed to run all events", e);
+
+				return result;
+			}
+
 		}
-		catch (e) {
 
-			return false;
-		}
+		runEvent(0);
 
 	}
 
-	// saves a simple callback
-	var on = function (name, _event) {
 
-		events[name] = _event;
+	// saves a callback event method to a master list and a sub identifier to be later called by the dispatch method above, this can be called along with it's siblings by only providing the master list name, the id would be used only to retrieve a return value 
+	var on = function (name, id, _event) {
+
+		if (!self.events[name]) {
+			self.events[name] = {};
+			numEvents = 0;
+		}
+
+		self.events[name][id] = {
+			index:numEvents++,
+			id:id, 
+			event:_event
+		}
 
 	}
 
