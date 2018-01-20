@@ -924,14 +924,13 @@ var obj = {};
 
         		// console.log("@@@@@@@@@@@@@@@@\n\n\n\n\n\n\n\n\array is single\n\n\n\n\n\n@@@@@@@@@@@@@@")
 
-        		if (!$(array)[0]) {
+        		if ($(array)[0]) {
         			// console.log("element does not exist");
+        			result = true;
+        		}
+        		else {
         			result = false;
         		}
-
-        		// console.log("element exists");
-        		
-        		result = true;
 
         	}
 
