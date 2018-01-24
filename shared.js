@@ -1034,7 +1034,8 @@ var obj = {};
 		shuffle:shuffle,
 		sort:sort,
 		linear:linear,
-		waitForElem:waitForElem
+		waitForElem:waitForElem,
+		fixInside:fixInside
 	}
 
 
