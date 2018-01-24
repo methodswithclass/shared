@@ -1,6 +1,6 @@
 {
   "name": "mc-shared",
-  "version": "4.1.6",
+  "version": "4.1.7",
   "description": "a set of shared modules for general use in a web application",
   "main": "shared.js",
   "scripts": {
