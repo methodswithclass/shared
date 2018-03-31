@@ -4,10 +4,13 @@ var obj = {};
 (function(obj) {
 
 
-	var events = {};
-	var triggers = {};
-	var defers = {};
-	var promises = {};
+	var self = this;
+
+	this.events = {};
+	this.triggers = {};
+	this.defers = {};
+	this.promises = {};
+	this.index = {};
 
 	var numEvents = 0;
 
@@ -16,7 +19,7 @@ var obj = {};
 
 		try {
 
-			promises[name].resolve();
+			self.promises[name].resolve();
 
 			return true;
 		}
@@ -29,51 +32,121 @@ var obj = {};
 	// saves and returns a promise that will be run later, optional config callback will be run before promise is resolved
 	var defer = function (name, _config) {
 
-		promises[name] = $q.defer();
+		self.promises[name] = $q.defer();
 
-		promises[name].promise.then(function () {
+		self.promises[name].promise.then(function () {
 			
 			if (_config) return _config();
 			return false;
 		});
 
-		return promises[name];
+		return self.promises[name];
 	}
 
-
 	// called to trigger the events registered by the "on" method below, all events registered to the same name will be triggered, any values returned by those events can be assigned to an object by this call, with the sub identifiers defined in the "on" method as the keys
-	var dispatch = function (name) {
+	var dispatch = function (name, id) {
+
+		// console.log("dispatch event", name);
 
 		var result = {};
+		var sub;
 
 		var runEvent = function (index) {
 
 			try {
-
-				var sub = events[name].forEach(function (value, i) {
-
-					return value.index == index;
-				})
 				
-				if (index < events[name].length) {
-					result[id] = events[name][sub.id].event();
+				if (index < Object.keys(self.events[name]).length) {
 
-					runEvent(index + 1);
-				}
-				else {
-					return result;
+					for (var i in self.events[name]) {
+
+						if (self.events[name][i]["index"] == index) {
+							
+							sub = self.events[name][i];
+						}
+					}
+
+					
+
+					if (sub) {
+
+						console.log("dispatch event in series with id:", sub.id, "from event bundle named:", name);
+
+						if (self.events[name] && self.events[name][sub.id] && self.events[name][sub.id].event) {
+
+							result[sub.id] = self.events[name][sub.id].event();
+						}
+						else {
+							
+							if (!self.events[name]) {
+								console.log("no event bundle with name:", name, " --no action taken, returning null")
+							}
+							else if (!self.events[name][sub.id]) {
+								console.log("event bundle with name:", name, "has no event with id:", sub.id, " --no action taken, returning null")
+							}
+							else if (!self.events[name][sub.id].event) {
+								console.log("event id", sub.id, "in event bundle with name:", name, "has no event to fire, --no action taken, returning null");
+							}
+
+							result[sub.id] = null;
+						}
+
+					}
+					else {
+
+						result["single"] = null;
+					}
+
+					// console.log("return value", result);
+
+					return runEvent(index + 1);
 				}
 
 			}
 			catch (e) {
-				console.log("failed to run all events", e);
-
+				console.log("'" + name + "'", "event bundle series-firing-error caught while firing in progress.\n(ERROR MESSAGE):", e);
 				return result;
 			}
 
 		}
 
-		runEvent(0);
+		if (id) {
+
+			console.log("dispatch single event with id:", id, "from event bundle with name:", name);
+
+			if (self.events[name] && self.events[name][id] && self.events[name][id].event) {
+
+				result[id] = self.events[name][id].event();
+			}
+			else {
+				
+				if (!self.events[name]) {
+					console.log("no event bundle with name:", name, " --no action taken, returning null")
+				}
+				else if (!self.events[name][id]) {
+					console.log("event bundle with name:", name, "has no event with id:", id, " --no action taken, returning null")
+				}
+				else if (!self.events[name][id].event) {
+					console.log("event id", id, "in event bundle with name:", name, "has no event to fire, --no action taken, returning null");
+				}
+
+				result[id] = null;
+			}
+
+
+		}
+		else if (self.events[name]) {
+
+			console.log("dispatch event bundle named:", name);
+			result = runEvent(0);
+		}
+		else {
+
+			console.log("no event bundle with name:", name, " --no action taken, returning null");
+			result["single"] = null;
+		}
+
+		
+		return result;
 
 	}
 
@@ -81,16 +154,39 @@ var obj = {};
 	// saves a callback event method to a master list and a sub identifier to be later called by the dispatch method above, all the siblings registered by this method are called when the dispatch method is called by only providing the master list name, the id is used only to retrieve the return value of an individual event 
 	var on = function (name, id, _event) {
 
-		if (!events[name]) {
-			events[name] = {};
-			numEvents = 0;
+		function isFunction(functionToCheck) {
+		 var getType = {};
+		 return functionToCheck && getType.toString.call(functionToCheck) === '[object Function]';
 		}
 
-		events[name][id] = {
-			index:numEvents++,
-			id:id, 
-			event:_event
+
+		if (!self.events[name]) {
+			self.events[name] = {};
+			self.index[name] = 0;
 		}
+
+		if (isFunction(id)) {
+
+			console.log("register event", name, "with id: single");
+
+			self.events[name]["single"] = {
+				index:self.index[name],
+				id:"single",
+				event:id
+			}
+		}
+		else { 
+
+			console.log("register event", name, "with id:", id);
+
+			self.events[name][id] = {
+				index:self.index[name],
+				id:id, 
+				event:_event
+			}
+		}
+
+		self.index[name] += 1;
 
 	}
 
@@ -99,9 +195,9 @@ var obj = {};
 
 		console.log("for " + name + " create trigger set");
 
-		triggers[name] = [];
+		self.triggers[name] = [];
 
-		return triggers[name];
+		return self.triggers[name];
 	}
 
 	// get a trigger set by its name
@@ -209,7 +305,7 @@ var obj = {};
 	// test whether trigger set already exists
 	var doesTriggerSetExist = function (name) {
 
-		if (triggers[name]) {
+		if (self.triggers[name]) {
 			return true;
 		}
 
@@ -326,9 +422,9 @@ var obj = {};
 	// run individual trigger
 	var runTrigger = function (name, input) {
 
-		defers[name] = waitForTriggerToExist(name, input);
+		self.defers[name] = waitForTriggerToExist(name, input);
 
-		defers[name].then(function () {
+		self.defers[name].then(function () {
 
 			var trigger = getTriggerByInput(name, input);
 
@@ -340,7 +436,7 @@ var obj = {};
 	// delete all triggers
 	var clearTriggers = function (name) {
 
-		triggers[name] = [];
+		self.triggers[name] = [];
 	} 
 
 	
