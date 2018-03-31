@@ -50,13 +50,13 @@ var obj = {};
 
 			try {
 
-				var sub = self.events[name].forEach(function (value, i) {
+				var sub = events[name].forEach(function (value, i) {
 
 					return value.index == index;
 				})
 				
-				if (index < self.events[name].length) {
-					result[id] = self.events[name][sub.id].event();
+				if (index < events[name].length) {
+					result[id] = events[name][sub.id].event();
 
 					runEvent(index + 1);
 				}
@@ -81,12 +81,12 @@ var obj = {};
 	// saves a callback event method to a master list and a sub identifier to be later called by the dispatch method above, all the siblings registered by this method are called when the dispatch method is called by only providing the master list name, the id is used only to retrieve the return value of an individual event 
 	var on = function (name, id, _event) {
 
-		if (!self.events[name]) {
-			self.events[name] = {};
+		if (!events[name]) {
+			events[name] = {};
 			numEvents = 0;
 		}
 
-		self.events[name][id] = {
+		events[name][id] = {
 			index:numEvents++,
 			id:id, 
 			event:_event
@@ -911,7 +911,7 @@ var obj = {};
         		}
 
 
-	        	if (Object.keys(active).length < array.length-1) {
+	        	if (Object.keys(active).length >= array.length) {
 
 	        		result = true;
 	        	}
