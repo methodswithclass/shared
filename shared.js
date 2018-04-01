@@ -69,7 +69,7 @@ var obj = {};
 
 					if (sub) {
 
-						console.log("dispatch event in series with id:", sub.id, "from event bundle named:", name);
+						// console.log("dispatch event in series with id:", sub.id, "from event bundle named:", name);
 
 						if (self.events[name] && self.events[name][sub.id] && self.events[name][sub.id].event) {
 
@@ -111,7 +111,7 @@ var obj = {};
 
 		if (id) {
 
-			console.log("dispatch single event with id:", id, "from event bundle with name:", name);
+			// console.log("dispatch single event with id:", id, "from event bundle with name:", name);
 
 			if (self.events[name] && self.events[name][id] && self.events[name][id].event) {
 
@@ -136,7 +136,7 @@ var obj = {};
 		}
 		else if (self.events[name]) {
 
-			console.log("dispatch event bundle named:", name);
+			// console.log("dispatch event bundle named:", name);
 			result = runEvent(0);
 		}
 		else {
@@ -167,7 +167,7 @@ var obj = {};
 
 		if (isFunction(id)) {
 
-			console.log("register event", name, "with id: single");
+			// console.log("register event", name, "with id: single");
 
 			self.events[name]["single"] = {
 				index:self.index[name],
@@ -177,7 +177,7 @@ var obj = {};
 		}
 		else { 
 
-			console.log("register event", name, "with id:", id);
+			// console.log("register event", name, "with id:", id);
 
 			self.events[name][id] = {
 				index:self.index[name],
@@ -985,7 +985,7 @@ var obj = {};
 
         var count = 0;
         var result = false;
-        var active = {}
+        var active = []
 
         var checkElements = function (array) {
 
