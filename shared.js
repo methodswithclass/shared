@@ -488,7 +488,7 @@ var obj = {};
 		self.state = input.state || null;
 		var subs = [];
 
-		console.log(self.name, "observable")
+		// console.log(self.name, "observable")
 
 		var notify = function () {
 
