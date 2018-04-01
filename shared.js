@@ -990,7 +990,7 @@ var obj = {};
         var checkElements = function (array) {
 
         	result = false;
-        	active = {};
+        	active = [];
 
         	if (Array.isArray(array)) {
 
@@ -1001,13 +1001,13 @@ var obj = {};
         			// console.log("element", array[i], "does not exist");
 
 	        		if ($(array[i])[0]) {
-	        			active[i] = true;
+	        			active.push(true);
 	        		}
 
         		}
 
 
-	        	if (Object.keys(active).length >= array.length) {
+	        	if (active.length >= array.length) {
 
 	        		result = true;
 	        	}
