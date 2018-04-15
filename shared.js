@@ -6,11 +6,11 @@ var obj = {};
 
 	var self = this;
 
-	this.events = {};
-	this.triggers = {};
-	this.defers = {};
-	this.promises = {};
-	this.index = {};
+	self.events = {};
+	self.triggers = {};
+	self.defers = {};
+	self.promises = {};
+	self.index = {};
 
 	var numEvents = 0;
 
@@ -819,6 +819,11 @@ var obj = {};
 				isNot:"port"
 			}
 		}
+	}
+
+	var isInteger = function (num) {
+
+		return Math.abs(num - Math.floor(num)) == 0;
 	}
 
 	var sum = function (array, $callback) {
