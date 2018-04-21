@@ -7,7 +7,6 @@ var obj = {};
 	var self = this;
 
 	self.events = {};
-	self.triggers = {};
 	self.defers = {};
 	self.promises = {};
 	self.index = {};
@@ -190,265 +189,12 @@ var obj = {};
 
 	}
 
-	// create a set of callacks, triggers, to be chained
-	var createTriggerSet = function (name) {
-
-		console.log("for " + name + " create trigger set");
-
-		self.triggers[name] = [];
-
-		return self.triggers[name];
-	}
-
-	// get a trigger set by its name
-	var getTriggerSet = function (name) {
-
-		var triggerSet = triggers[name];
-
-		if (triggerSet) {
-
-			console.log("for " + name + " get existing trigger set");
-
-			return triggerSet;
-		}
-
-		return [];
-	}
-
-	// change index of all triggers in set to be sequential
-	var refactorTriggers = function (name) {
-
-		var triggerSet = getTriggerSet(name);
-
-		for (i in triggerSet) {
-
-			triggerSet[i].index = i;
-		}
-	}
-
-	// sort triggers
-	var sortTriggers = function (name) {
-
-		var triggerSet = getTriggerSet(name);
-
-		if (triggerSet.length > 1) {
-
-			triggerSet.sort(function(a,b) {
-
-				if (a.index == b.index) {
-					return a.sub - b.sub;
-				}
-
-				return a.index - b.index;
-			});
-
-			refactorTriggers(name);
-
-		}
-
-	}
-
-	// internal function to get trigger by its index
-	var getTriggerByIndex = function (name, trigger_index) {
-
-		var triggerSet = getTriggerSet(name);
-
-		for (i in triggerSet) {
-
-			if (triggerSet[i].index == trigger_index) {
-
-				return triggerSet[i];
-			}
-		}
-
-		return {name:"none", index:-1};
-	}
-
-	// internal function to get trigger by its name
-	var getTriggerByName = function (name, trigger_name) {
-
-		var triggerSet = getTriggerSet(name);
-
-		for (i in triggerSet) {
-
-			if (triggerSet[i].name == trigger_name) {
-
-				return triggerSet[i];
-			}
-		}
-
-		return {name:"none", index:-1}; 
-	}
-
-	// public function to get trigger by either input
-	var getTrigger = function (name, input) {
-
-		var trigger;
-
-		//console.log("getting trigger in set " + name + " with id " + input);
-
-		if (input >= 0) {
-
-			trigger = getTriggerByIndex(name, input);
-		}
-		else if (input.length > 0) {
-			trigger = getTriggerByName(name, input);
-		}
-		else {
-
-			trigger = {name:"none", index:-1};
-		}
-
-		return trigger;
-	}
-
-	// test whether trigger set already exists
-	var doesTriggerSetExist = function (name) {
-
-		if (self.triggers[name]) {
-			return true;
-		}
-
-		return false;
-	}
-
-	// test whether trigger already exists
-	var doesTriggerExist = function (name, input) {
-
-		var trigger;
-
-		if (doesTriggerSetExist(name)) {
-
-			trigger = getTrigger(name, input);
-
-			console.log("trigger index is " + trigger.index);
-
-			if (trigger.index >= 0) {
-				return true;
-			}
-		}
-
-		return false;
-	}
-
-	// add a trigger to a set or create one to add it to
-	var addTrigger = function (name, params) {
-
-		var triggerSet;
-
-		if (doesTriggerSetExist(name)) {
-			triggerSet = getTriggerSet(name);
-		}
-		else {
-
-			triggerSet = createTriggerSet(name);
-		}
-
-		if (params)  {
-
-			console.log("add trigger " + name + " with name " + params.name);
-			
-			triggerSet.push(params);
-			
-			sortTriggers(name);
-		}
-		else {
-			console.log("no set to add to _or_ no trigger to add");
-		}
-	}
-
-	// run set of chained triggers between indecies
-	var runTriggers = function (name, params) {
-
-		var low = params.low;
-		var high;
-
-		if (low instanceof Number) {
-			high = params.high;
-		}
-		else if (params.all) {
-			low = 0;
-			high = triggerSet.length-1;
-		}
-
-		var deferred = $q.defer();
-
-		var promise = deferred.promise;
-
-		for (var i = low; i <= high; i++) {
-
-			promise.then(function (result) {
-
-				var trigger = getTriggerByIndex(name, i);
-
-				if (trigger.name != "none"){
-
-					console.log("run trigger " + trigger.name);
-
-					trigger.callback();
-				}
-				else {
-					console.log("no trigger to run");
-				}
-
-				return true;
-			});
-		}
-
-		deferred.resolve();
-	}
-
-	// pause chaining while trigger in set does not exist
-	var waitForTriggerToExist = function (name, input) {
-
-		return $q(function (resolve) {
-
-			console.log("waiting for " + input + " in set " + name + " to exist");
-
-			var wait = setInterval(function () {
-
-				if (doesTriggerExist(name, input)) {
-
-					clearInterval(wait);
-					wait = null;
-					resolve();
-				}
-
-			}, 100);
-
-		});
-	}
-
-	// run individual trigger
-	var runTrigger = function (name, input) {
-
-		self.defers[name] = waitForTriggerToExist(name, input);
-
-		self.defers[name].then(function () {
-
-			var trigger = getTriggerByInput(name, input);
-
-			trigger.callback();
-		});
-
-	}
-
-	// delete all triggers
-	var clearTriggers = function (name) {
-
-		self.triggers[name] = [];
-	} 
-
 	
 	obj.events_service = {
 		on:on,
 		dispatch:dispatch,
 		defer:defer,
-		future:future,
-		addTrigger:addTrigger,
-		runTriggers:runTriggers,
-		runTrigger:runTrigger,
-		clearTriggers:clearTriggers
+		future:future
 	}
 
 
@@ -458,22 +204,21 @@ var obj = {};
 
 
 
-
-
 (function (obj) {
-
 	
-	var saves = {};
-	var names = [];
+	saves = {};
+	names = [];
 
 	var r = function (name) {
 
-		for (i in names) {
+		var found = names.find((p) => {
 
-			if (name == names[i]) {
+			return p == name;
+		})
 
-				return true;
-			}
+
+		if (found) {
+			return true;
 		}
 
 		return false;
@@ -481,87 +226,90 @@ var obj = {};
 
 	var obs = function (input) {
 
-
 		var self = this;
-		var o = [];
 		self.name = input.name || "";
-		self.state = input.state || null;
+		self.state = input.state || undefined;
 		var subs = [];
 
-		// console.log(self.name, "observable")
 
 		var notify = function () {
-
-			//console.log(self.name, "notify");
 
 			for (i in subs) {
 				subs[i](self.state);
 			}
 		}
 
+		self.notify = function () {
+
+			notify();
+		}
+
 		self.subscribe = function (callback) {
 
-			//console.log(self.name, "subscribe");
-
 			subs.push(callback);
-
-			//notify();
 		}
 
 		self.setState = function (state) {
 
-			//console.log(self.name, "set state", state);
-
+			// console.log("push notify", self.name);
 			self.state = state;
-
 			notify();
 		}
 
 	}
 
-	var observable = function (input) {
+	var createObs = function (input) {
 
-		if (!r(input.name)) {
-			saves[input.name] = new obs(input);
-			names[names.length] = input.name;
-		}
-		else {
-			saves[input.name].setState(input.state);
-		}
+		// console.log("create new observable object", input);
+
+		saves[input.name] = new obs(input);
+		if (input.callback) saves[input.name].subscribe(input.callback);
+		if (input.state) saves[input.name].setState(input.state);
+		names.push(input.name);
 	}
 
 	var subscribe = function (input) {
 
+		console.log("register subscribe", input.name);
+
 		if (r(input.name)) {
+
+
 			saves[input.name].subscribe(input.callback);
+
+			if (saves[input.name].state) {
+				console.log("subscribe notify", input.name);
+				saves[input.name].notify();
+			}
 		}
 		else {
-			saves[input.name] = new obs(input);
-			saves[input.name].subscribe(input.callback);
-			names[names.length] = input.name;
-		}
 
+			createObs(input);
+		}
 	}
 
 	var push = function (input) {
 
+		console.log("register push", input.name);
+
 		if (r(input.name)) {
+
 			saves[input.name].setState(input.state);
 		}
 		else {
-			console.log("no name at push (" + input.name + ")");
+
+			console.log("\n\nno object named:", input.name, "that can receive this data exists at this time,\nthe data is being saved and will be pushed when a receiving object is registered\n\n")
+
+			createObs(input)
 		}
 	}
 
 	obj.react_service = {
-		observable:observable,
 		subscribe:subscribe,
 		push:push
 	}
 
-
-
-}(obj));
+})(obj);
 
 
 
