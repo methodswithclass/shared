@@ -270,7 +270,7 @@ var obj = {};
 
 	var subscribe = function (input) {
 
-		console.log("register subscribe", input.name);
+		// console.log("register subscribe", input.name);
 
 		if (r(input.name)) {
 
@@ -290,7 +290,7 @@ var obj = {};
 
 	var push = function (input) {
 
-		console.log("register push", input.name);
+		// console.log("register push", input.name);
 
 		if (r(input.name)) {
 
