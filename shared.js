@@ -638,6 +638,27 @@ var obj = {};
 		return array[0];
 	}
 
+	var valueFunc = function ($value) {
+
+		return function (value, index, array) {
+		
+			return value[$value];
+		}
+	}
+
+	var avgArray = function (array, value, number) {
+
+		if (number >= 0) {
+			return truncate(average(array, valueFunc(value)), number);
+		}
+		else if (typeof value !== "undefined") {
+			return average(array, valueFunc(value))
+		}
+		else {
+			return average(array);
+		}
+	}
+
 	var log = function(x, num) {
 		return Math.log(x) / Math.log(num);
 	}
@@ -884,7 +905,9 @@ var obj = {};
 		sort:sort,
 		linear:linear,
 		waitForElem:waitForElem,
-		fixInside:fixInside
+		fixInside:fixInside,
+		valueFunc:valueFunc,
+		avgArray:avgArray
 	}
 
 
