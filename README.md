@@ -12,6 +12,8 @@ This package cantains four modules.
 	Data Sending and Recieving, and
 	Observable
 	
+	
+There are no dependencies and all of the services are independent from each other
 
 None of these module patterns are new or ground breaking, only a handful of the methods of the Utility are custom built that aren't found anywhere else. 
 
@@ -41,10 +43,10 @@ To add modules/services to your projects on the frontend do the following:
 	anywhere in a function, an app module, or the global scope, importing everything (not required) would look like this
 	
 	var shared = window.shared;
-    var g = shared.utility_service;
-    var send = shared.send_service;
-    var react = shared.react_service;
-    var events = shared.events_service;
+	var g = shared.utility_service;
+	var send = shared.send_service;
+	var react = shared.react_service;
+	var events = shared.events_service;
 
 
 
@@ -58,9 +60,9 @@ To add the services to your node project do the following:
 
 
 	var g = shared.utility_service;
-    var send = shared.send_service;
-    var react = shared.react_service;
-    var events = shared.events_service;
+	var send = shared.send_service;
+	var react = shared.react_service;
+	var events = shared.events_service;
 
 
 
