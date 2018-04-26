@@ -1,28 +1,36 @@
 # mc-shared
 
-This is a collection of native Javascript modules that contain several useful utilities for any project. Whether its Angular, Backbone, React, or any other framework. These utilities are well suited to integrate because they are unopinionated about framework. They are just Javascript. 
+
+This collection of native JavaScript unopinionated services can be used in any JavaScript framework: Angular, Backbone, React; even Node on the backend without any adjustments.
+
 
 This package cantains four modules.
+
 
 	Events
 	General Utility
 	Data Sending and Recieving, and
 	Observable
 	
-While you may be familiar with each of these these patterns already and wondering why you should use this package, the answer is that these modules are vast simplifications of common patterns and common monolilth libraries, and they are widely versitile within a project. 
 
-They require no complicated or strict import porcedures, they can be used on the frontend or the backend just as well (npm or something like bower, they automatically attach them themselves to the global window object (see below) on the frontend, and you simply require it into your node module on the backend. Beyond that they work identically) 
-
-Most importantly, these packages are stripped down to the bare minimum. So the Observables module only has subscribe and push methods. And the Events module is a simple registration of a callback to a name with the "on" method, and then the "dispatch" method is called with that name from any other part of the app and the callback will run locally where it was registered.
-
-I did not see the need in my own work to make it more complicated than these cases, but if I need more, I add more functionality without ever breaking existing functioniality.
+None of these module patterns are new or ground breaking, only a handful of the methods of the Utility are custom built that aren't found anywhere else. 
 
 
+The reason it's smart to use these modules over the standard, in some casess, is that these modules
 
 
-To import 
+	are vast simplifications of the common monolilthic libraries, and they are widely more versitile within a project. 
 
-everything is attached to the window object, which has a shared object, which has the four module/services
+	have no complicated or strict import procedures
+
+	are stripped down to the bare minimum and are very lightweight, saving docs to learn and MBs to lug around
+
+
+
+
+To add modules/services to your projects on the frontend do the following:
+
+	the services come packaged as a collection under the 'shared' object, each named the following, which is attached to the global window object 
 
 	events_service
 	send_service
@@ -30,15 +38,34 @@ everything is attached to the window object, which has a shared object, which ha
 	utility_service
 
 
-	so anywhere in a function, an app module, or the global scope importing everything (not required) would look like this
-	Note: there are no dependcies, and each module is independent of each other
-
+	anywhere in a function, an app module, or the global scope, importing everything (not required) would look like this
+	
 	var shared = window.shared;
     var g = shared.utility_service;
     var send = shared.send_service;
     var react = shared.react_service;
     var events = shared.events_service;
 
+
+
+To add the services to your node project do the following:
+
+
+	the services come packaged together in a temp object and are returned from mc-shared through the standard "module.exports" call, it is also received through the standard "require" statement.
+
+
+	var shared = require("mc-shared");
+
+
+	var g = shared.utility_service;
+    var send = shared.send_service;
+    var react = shared.react_service;
+    var events = shared.events_service;
+
+
+
+
+mc-shared can be installed on the frontend with something like bower, so that it's attached to the window object, and it can be installed with npm so that it loads onto the backend with require. These two instances of the package can coexist simultaneously. The mc-shared module code detects whether it's the frontend or backend automatically.   
 
 
 
