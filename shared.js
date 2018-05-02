@@ -574,6 +574,11 @@ var obj = {};
 		return Math.abs(num - Math.floor(num)) == 0;
 	}
 
+	var doesExist = function (item, type) {
+
+		return (typeof item).toLowercase() !== (type ? type || "undefined");
+	}
+
 	var sum = function (array, $callback) {
 
 		var sum = 0;
@@ -595,20 +600,73 @@ var obj = {};
 
 	var average = function (array, $callback) {
 
-		var total = sum(array, $callback);
+		var total = 0;
+
+		var callback = function (value, index, array) {
+
+			return value;
+		}
+
+		if ($callback) callback = $callback;
+
+
+		total = sum(array, callback);
+
 
 		return total/array.length;
 	}
 
-	var value = function (value, index, array) {
+	var valueFunc = function (value, index, array) {
 		return value;
 	}
 
-	var truncate = function (number, decimal) {
-			
-		var value = Math.floor(number*Math.pow(10, decimal))/Math.pow(10, decimal);
+	var valueParam = function ($value) {
+
+		return function (_value, index, array) {
 		
-		return value;
+			return _value[$value];
+		}
+	}
+
+	var truncate = function (number, decimal) {
+		
+		return Math.floor(number*Math.pow(10, decimal))/Math.pow(10, decimal);
+	}
+
+	var avgArray = function (options) {
+
+		var array = options.array ? options.array || undefined;
+		var $$value = options["$$value"] ? options["$$value"] || undefined;
+		var number = options.number ? options.number || undefined;
+
+		var avg;
+
+		var valueExists = $$value ? doesExist($$value, "string") || false;
+		var numberExists = number ? doesExist(number) || false;
+		var arrayExists = array ? doesExist(array) || false;
+
+
+		if (arrayExists) {
+
+			if (valueExists) {
+				avg = average(array, valueParam($$value));
+			}
+			else {
+				avg = average(array);
+			}
+
+			if (numberExists) {
+				avg = truncate(avg, number);
+			}
+
+		}
+		else {
+			console.log("array undefined when trying to average")
+			return null;
+		}
+
+		
+		return avg;
 	}
 
 	var round = function (number, order) {
@@ -636,27 +694,6 @@ var obj = {};
 	var first = function (array) {
 
 		return array[0];
-	}
-
-	var valueFunc = function ($value) {
-
-		return function (value, index, array) {
-		
-			return value[$value];
-		}
-	}
-
-	var avgArray = function (array, value, number) {
-
-		if (number >= 0) {
-			return truncate(average(array, valueFunc(value)), number);
-		}
-		else if (typeof value !== "undefined") {
-			return average(array, valueFunc(value))
-		}
-		else {
-			return average(array);
-		}
 	}
 
 	var log = function(x, num) {
@@ -889,11 +926,17 @@ var obj = {};
 		forceMobile:forceMobile,
 		isMobile:isMobile,
 		whatDevice:whatDevice,
-		truncate:truncate,
+		checkDevice:checkDevice,
+		isPortrait:isPortrait,
+		getOrientation:getOrientation,
+		isInteger:isInteger,
+		doesExist:doesExist,
 		average:average,
 		sum:sum,
-		value:value,
+		value:valueFunc,
+		valueFunc:valueParam,
 		truncate:truncate,
+		avgArray:avgArray,
 		round:round,
 		resolveDigitString:resolveDigitString,
 		last:last,
@@ -905,9 +948,7 @@ var obj = {};
 		sort:sort,
 		linear:linear,
 		waitForElem:waitForElem,
-		fixInside:fixInside,
-		valueFunc:valueFunc,
-		avgArray:avgArray
+		fixInside:fixInside
 	}
 
 
