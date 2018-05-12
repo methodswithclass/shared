@@ -301,7 +301,7 @@ var obj = {};
 			saves[input.name].subscribe(input.callback);
 
 			if (saves[input.name].state) {
-				console.log("subscribe notify", input.name);
+				// console.log("subscribe notify", input.name);
 				saves[input.name].notify();
 			}
 		}
@@ -599,9 +599,11 @@ var obj = {};
 
 	var doesExist = function (item, type) {
 
-		var $type = typeof item;
+		var $type = (typeof item).toString().toLowerCase();
 
-		return ($type.toString().toLowerCase() !== (type ? type : "undefined"));
+		// console.log("$type", $type);
+
+		return (type ? $type === type : ($type !== "undefined"));
 	}
 
 	var sum = function (array, $callback) {
@@ -620,6 +622,8 @@ var obj = {};
 			sum += callback(array[i], i, array);
 		}
 
+		// console.log("sum is", sum);
+
 		return sum;
 	}
 
@@ -637,6 +641,7 @@ var obj = {};
 
 		total = sum(array, callback);
 
+		// console.log("total is", total);
 
 		return total/array.length;
 	}
@@ -649,6 +654,8 @@ var obj = {};
 
 		return function (_value, index, array) {
 		
+			// console.log("_value", _value, "$value", $value);
+
 			return _value[$value];
 		}
 	}
@@ -660,16 +667,20 @@ var obj = {};
 
 	var avgArray = function (options) {
 
-		var array = options.array ? options.array : undefined;
-		var $$value = options["$$value"] ? options["$$value"] : undefined;
-		var number = options.number ? options.number : undefined;
+		var array = options["array"] ? options["array"] : undefined;
+		var $$value = options["value"] ? options["value"] : undefined;
+		var number = options["truncate"] ? options["truncate"] : undefined;
+
+		// console.log("$$value", $$value);
 
 		var avg;
 
-		var valueExists = $$value ? doesExist($$value, "string") : false;
-		var numberExists = number ? doesExist(number) : false;
-		var arrayExists = array ? doesExist(array) : false;
+		var valueExists = doesExist($$value, "string");
+		var numberExists = doesExist(number);
+		var arrayExists = doesExist(array);
 
+
+		// console.log("valueExists", valueExists);
 
 		if (arrayExists) {
 
