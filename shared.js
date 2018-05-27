@@ -176,9 +176,21 @@ var obj = {};
 	// saves a callback event method to a master list and a sub identifier to be later called by the dispatch method above, all the siblings registered by this method are called when the dispatch method is called by only providing the master list name, the id is used only to retrieve the return value of an individual event 
 	var on = function (name, id, _event) {
 
-		function isFunction(functionToCheck) {
+		// console.log("register event call on()", name, (isFunc(id) ? "single" : id))
+
+		function isFunc(functionToCheck) {
 		 var getType = {};
 		 return functionToCheck && getType.toString.call(functionToCheck) === '[object Function]';
+		}
+
+		function objLen (obj) {
+			var count = 0;
+			for (var i in obj) {
+				if (obj.hasOwnProperty(i)) {
+					count++;
+				}
+			}
+			return count;
 		}
 
 
@@ -187,28 +199,22 @@ var obj = {};
 			self.index[name] = 0;
 		}
 
-		if (isFunction(id)) {
 
-			// console.log("register event", name, "with id: single");
+		if (!self.events[name][(isFunc(id) ? "single" : id)]) {
 
-			self.events[name]["single"] = {
+			// console.log("is not duplicate, register event", name, (isFunc(id) ? "single" : id));
+
+			self.events[name][(isFunc(id) ? "single" : id)] = {
 				index:self.index[name],
-				id:"single",
-				event:id
+				id:(isFunc(id) ? "single" : id),
+				event:(isFunc(id) ? id : _event)
 			}
+
+			self.index[name] += 1;
 		}
-		else { 
-
-			// console.log("register event", name, "with id:", id);
-
-			self.events[name][id] = {
-				index:self.index[name],
-				id:id, 
-				event:_event
-			}
+		else {
+			// console.log("\nis duplicate, DO NOT register event", name, (isFunc(id) ? "single" : id));
 		}
-
-		self.index[name] += 1;
 
 	}
 
