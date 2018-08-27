@@ -837,6 +837,7 @@ var obj = {};
 	var waitForElem = function (options, complete) {
 
 		var const = {
+			noexist:"noexist",
 			found:"found",
 			notfound:"notfound"
 		}
@@ -848,7 +849,7 @@ var obj = {};
         var checkElements = function (array) {
 
         	if (array === undefined || array === null) {
-        		return const.notfound;
+        		return const.noexist;
         	}
 
         	result = const.found;
@@ -904,7 +905,7 @@ var obj = {};
         var waitTimer = setInterval(function () {
 
 
-        	if (checkElements(options.elems) == const.notfound) {
+        	if (checkElements(options.elems) == const.noexist) {
         		stopTimer();
         	}
 			else if (checkElements(options.elems) == const.found || count >= 500) {
