@@ -836,7 +836,7 @@ var obj = {};
 
 	var waitForElem = function (options, complete) {
 
-		var const = {
+		var c = {
 			noexist:"noexist",
 			found:"found",
 			notfound:"notfound"
@@ -849,10 +849,10 @@ var obj = {};
         var checkElements = function (array) {
 
         	if (array === undefined || array === null) {
-        		return const.noexist;
+        		return c.noexist;
         	}
 
-        	result = const.found;
+        	result = c.found;
         	active = [];
 
         	if (Array.isArray(array)) {
@@ -872,10 +872,10 @@ var obj = {};
 
 	        	if (active.length >= array.length) {
 
-	        		result = const.found;
+	        		result = c.found;
 	        	}
 	        	else {
-	        		result = const.notfound;
+	        		result = c.notfound;
 	        	}
 
         	}
@@ -885,10 +885,10 @@ var obj = {};
 
         		if ($(array)[0]) {
         			// console.log("element does not exist");
-        			result = const.found;
+        			result = c.found;
         		}
         		else {
-        			result = const.notfound;
+        			result = c.notfound;
         		}
 
         	}
@@ -905,10 +905,10 @@ var obj = {};
         var waitTimer = setInterval(function () {
 
 
-        	if (checkElements(options.elems) == const.noexist) {
+        	if (checkElements(options.elems) == c.noexist) {
         		stopTimer();
         	}
-			else if (checkElements(options.elems) == const.found || count >= 500) {
+			else if (checkElements(options.elems) == c.found || count >= 500) {
 
             	// console.log("clear interval");
 
