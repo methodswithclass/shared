@@ -536,7 +536,7 @@ var obj = {};
 	// distinguish between a few popular mobile user agents, desktop agents, and IE
 	var whatDevice = function (forceMobile) {
 
-		if (mcshared._mobile) return mobile;
+		if (_mobile || forceMobile) return mobile;
 		else if(navigator.userAgent.match(/Android/i) ||
 	            navigator.userAgent.match(/webOS/i) ||
 	            navigator.userAgent.match(/iPhone/i) ||
@@ -544,15 +544,15 @@ var obj = {};
 	            navigator.userAgent.match(/iPad/i) ||
 	            navigator.userAgent.match(/Blackberry/i) ) {
 
-			return mcshared.mobile;
+			return mobile;
 		}
 		else if (navigator.userAgent.indexOf('Firefox') != -1 || navigator.userAgent.indexOf('Chrome') != -1 || navigator.userAgent.indexOf('Safari') != -1) {
 
-			return mcshared.desktop;
+			return desktop;
 		}
 		else
 
-			return mcshared.ie;
+			return ie;
 
 	}
 
@@ -984,6 +984,11 @@ var obj = {};
     }
 
 	obj.utility_service = {
+		devices:{
+			mobile:mobile,
+			desktop:desktop,
+			ie:ie
+		},
 		forceMobile:forceMobile,
 		isMobile:isMobile,
 		whatDevice:whatDevice,
