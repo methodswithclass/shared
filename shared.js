@@ -240,7 +240,7 @@ var obj = {};
 
 	var r = function (name) {
 
-		var found = names.find((p) => {
+		var found = names.find(function (p) {
 
 			return p == name;
 		})
