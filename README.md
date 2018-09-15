@@ -72,7 +72,7 @@ mc-shared can be installed on the frontend with something like bower, so that it
 
 
 
-See more comprehensive documentation at code.methodswithclass.com
+See more comprehensive documentation at https://code.methodswithclass.com
 
 
 
