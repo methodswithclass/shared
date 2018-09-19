@@ -67,7 +67,12 @@ To add the services to your node project do the following:
 
 
 
-mc-shared can be installed on the frontend with something like bower, so that it's attached to the window object, and it can be installed with npm so that it loads onto the backend with require. These two instances of the package can coexist simultaneously. The mc-shared module code detects whether it's the frontend or backend automatically.   
+mc-shared can be installed on the frontend with something like bower, so that it's attached to the window object, and it can be installed with npm so that it loads onto the backend with require. These two instances of the package can coexist simultaneously. The mc-shared module code detects whether it's the frontend or backend automatically. 
+
+
+
+
+See more comprehensive documentation at https://code.methodswithclass.com
 
 
 
