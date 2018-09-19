@@ -8,12 +8,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/methodswithclass/mc-shared.git"
+    "url": "git+https://github.com/methodswithclass/shared.git"
   },
   "author": "Christopher Polito <chris@mwithc.io>",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/methodswithclass/mc-shared/issues"
+    "url": "https://github.com/methodswithclass/shared/issues"
   },
-  "homepage": "https://github.com/methodswithclass/mc-shared#readme"
+  "homepage": "https://github.com/methodswithclass/shared#readme"
 }
