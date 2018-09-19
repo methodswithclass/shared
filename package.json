@@ -1,5 +1,5 @@
 {
-  "name": "@mwc/shared",
+  "name": "mc-shared",
   "version": "5.0.0",
   "description": "a set of shared modules for general use in a web application",
   "main": "shared.js",
