@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/methodswithclass/shared/issues"
   },
-  "homepage": "https://github.com/methodswithclass/shared#readme"
+  "homepage": "https://github.com/methodswithclass/shared#readme",
+  "dependencies": {
+    "jquery": "^3.3.1"
+  }
 }
