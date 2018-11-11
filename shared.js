@@ -22,7 +22,7 @@
 
 // var $ = require("jquery");
 
-import * as $ from "jquery";
+var $ = require("jquery");
 
 var obj = {};
 
