@@ -149,8 +149,8 @@ var obj = {};
 })(obj);
 
 (function (obj) {
-  saves = {};
-  names = [];
+  var saves = {};
+  var names = [];
   var n = "";
   var state = "";
 
