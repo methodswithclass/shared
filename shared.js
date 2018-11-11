@@ -20,7 +20,9 @@
 ***********************************************************************************/
 
 
-var $ = require("jquery");
+// var $ = require("jquery");
+
+import * as $ from "jquery";
 
 var obj = {};
 
