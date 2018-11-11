@@ -1,6 +1,6 @@
 {
   "name": "mc-shared",
-  "version": "5.2.0",
+  "version": "5.2.1",
   "description": "a set of shared modules for general use in a web application",
   "main": "dist/shared.js",
   "scripts": {
