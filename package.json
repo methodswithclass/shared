@@ -1,8 +1,8 @@
 {
   "name": "mc-shared",
-  "version": "5.1.2",
+  "version": "5.2.0",
   "description": "a set of shared modules for general use in a web application",
-  "main": "shared.js",
+  "main": "dist/shared.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "babel": "babel shared-src.js --out-file shared.js"
@@ -21,6 +21,10 @@
     "@babel/cli": "^7.1.5",
     "@babel/core": "^7.1.5",
     "@babel/preset-env": "^7.1.5",
+    "del": "^3.0.0",
+    "gulp": "^3.9.1",
+    "gulp-babel": "^8.0.0",
+    "gulp-webpack": "^1.5.0",
     "jquery": "^3.3.1"
   }
 }
