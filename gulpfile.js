@@ -13,7 +13,7 @@ var del = require("del");
 var build = function () {
 
 	return gulp.src('shared.js')
-  	.pipe(babel())
+  	// .pipe(babel())
     // .pipe(webpack({
     // 	mode:"development",
     // 	output: {
