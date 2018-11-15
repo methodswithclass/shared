@@ -8,8 +8,11 @@ var webpack = require('gulp-webpack');
 var babel = require('gulp-babel');
 var del = require("del");
 
-gulp.task('default', ["clean"], function() {
-  return gulp.src('shared.js')
+
+
+var build = function () {
+
+	return gulp.src('shared.js')
   	.pipe(babel())
     .pipe(webpack({
     	output: {
@@ -17,9 +20,12 @@ gulp.task('default', ["clean"], function() {
 	    }
     }))
     .pipe(gulp.dest('./dist'));
-});
+}
 
-gulp.task("clean", function () {
 
-	del("dist");
-})
+var clean = function () {
+
+	return del("dist");
+}
+
+gulp.task('default', gulp.series(clean, build));

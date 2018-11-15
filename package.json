@@ -1,30 +1,31 @@
 {
-  "name": "mc-shared",
-  "version": "5.2.1",
-  "description": "a set of shared modules for general use in a web application",
+  "name": "@methodswithclass/shared",
+  "version": "1.0.0",
+  "description": "a general utility for web applications, pure javascript",
   "main": "dist/shared.js",
+  "dependencies": {
+    "@babel/core": "^7.1.6",
+    "@babel/preset-env": "^7.1.6",
+    "del": "^3.0.0",
+    "gulp": "^4.0.0",
+    "gulp-babel": "^8.0.0",
+    "gulp-webpack": "^1.5.0",
+    "jquery": "^3.3.1",
+    "webpack": "^4.25.1",
+    "webpack-stream": "^5.1.1"
+  },
+  "devDependencies": {},
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "babel": "babel shared-src.js --out-file shared.js"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/methodswithclass/shared.git"
   },
-  "author": "Christopher Polito <chris@mwithc.io>",
+  "author": "Christopher Polito",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/methodswithclass/shared/issues"
   },
-  "homepage": "https://github.com/methodswithclass/shared#readme",
-  "dependencies": {
-    "@babel/cli": "^7.1.5",
-    "@babel/core": "^7.1.5",
-    "@babel/preset-env": "^7.1.5",
-    "del": "^3.0.0",
-    "gulp": "^3.9.1",
-    "gulp-babel": "^8.0.0",
-    "gulp-webpack": "^1.5.0",
-    "jquery": "^3.3.1"
-  }
+  "homepage": "https://github.com/methodswithclass/shared#readme"
 }
