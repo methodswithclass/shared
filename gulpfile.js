@@ -14,12 +14,12 @@ var build = function () {
 
 	return gulp.src('shared.js')
   	.pipe(babel())
-    .pipe(webpack({
-    	mode:"production",
-    	output: {
-	    	filename: 'shared.js',
-	    }
-    }))
+    // .pipe(webpack({
+    // 	mode:"development",
+    // 	output: {
+	   //  	filename: 'shared.js',
+	   //  }
+    // }))
     .pipe(gulp.dest('./dist'));
 }
 
