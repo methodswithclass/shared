@@ -265,7 +265,7 @@ var obj = {};
 
 		var notify = function () {
 
-			for (i in subs) {
+			for (var i in subs) {
 				subs[i](state);
 			}
 		}
@@ -280,10 +280,10 @@ var obj = {};
 			subs.push(callback);
 		}
 
-		self.setState = function (state) {
+		self.setState = function ($state) {
 
 			// console.log("push notify", n);
-			state = state;
+			state = $state;
 			notify();
 		}
 
