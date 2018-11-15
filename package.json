@@ -1,6 +1,6 @@
 {
   "name": "@methodswithclass/shared",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "a general utility for web applications, pure javascript",
   "main": "dist/shared.js",
   "dependencies": {
