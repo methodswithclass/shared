@@ -20,8 +20,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 
 ***********************************************************************************/
 // var $ = require("jquery");
-var $ = require("jquery");
-
+// var $ = require("jquery");
 var obj = {};
 
 (function (obj) {
