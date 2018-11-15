@@ -4,7 +4,7 @@
 
 
 var gulp = require('gulp');
-var webpack = require('gulp-webpack');
+var webpack = require('webpack-stream');
 var babel = require('gulp-babel');
 var del = require("del");
 
@@ -15,6 +15,7 @@ var build = function () {
 	return gulp.src('shared.js')
   	.pipe(babel())
     .pipe(webpack({
+    	mode:"production",
     	output: {
 	    	filename: 'shared.js',
 	    }
