@@ -233,12 +233,9 @@ var obj = {};
 
 
 (function (obj) {
-	
+
 	var saves = {};
 	var names = [];
-
-	var n = "";
-	var state = "";
 
 	var r = function (name) {
 
@@ -258,15 +255,15 @@ var obj = {};
 	var obs = function (input) {
 
 		var self = this;
-		n = input.name || "";
-		state = input.state || undefined;
+		self.n = input.name || "";
+		self.state = input.state || undefined;
 		var subs = [];
 
 
 		var notify = function () {
 
 			for (var i in subs) {
-				subs[i](state);
+				subs[i](self.state);
 			}
 		}
 
@@ -283,7 +280,7 @@ var obj = {};
 		self.setState = function ($state) {
 
 			// console.log("push notify", n);
-			state = $state;
+			self.state = $state;
 			notify();
 		}
 
@@ -757,7 +754,7 @@ var obj = {};
 		var digits = Math.floor(log(number*10, 10));
 		var total = Math.floor(log(zeros, 10)) - digits;
 		var leading = "";
-		var i = 0;
+		// var i = 0;
 		for (var i = 0; i <= total; i++) {
 			leading += "0";
 		}
@@ -792,11 +789,24 @@ var obj = {};
 
         var temp;
 
-        var check = which == "asc" ? ((key ? array[j][key] : array[j]) > (key ? array[i][key] : array[i])) : ((key ? array[j][key] : array[j]) < (key ? array[i][key] : array[i]))
+        var check;
 
         for (var i in array) {
 
             for (var j in array) {
+
+            	check = (
+            	         
+            	         (which == "asc") ? 
+
+            	          (key ? array[j][key] : (array[j] > (key ? array[i][key] : array[i])))
+            	           
+            	           : 
+            	          
+            	          (key ? array[j][key] : (array[j] < (key ? array[i][key] : array[i])))
+
+            	         );
+
                 if (check) {
                     temp = array[i];
                     array[i] = array[j];
